@@ -9,8 +9,8 @@ import (
 const (
 	vcSpec = "https://www.w3.org/2018/credentials/v1"
 
-	issuerID   = "https://violet.com/issuers/1"
-	issuerName = "Violet"
+	issuerID   = "https://oxford.com/issuers/1" // This is a fake URL.
+	issuerName = "The Marvelous University of Oxford"
 )
 
 var vcContext = []string{vcSpec}
@@ -49,6 +49,7 @@ func part2(issuer Issuer, subject Subject) (Credential, error) {
 		UniversityName: "Oxford",
 		Degree:         "Bachelor of Science",
 	}
+	nicePrint(claim, "Claim")
 
 	// Step 2: The Issuer signs the claim about this subject.
 	credentials, err := issuer.SignCredential(claim, subject.GetID())
@@ -70,7 +71,7 @@ func part3(subject Subject, verifier Verifier, credentials Credential) {
 	}
 
 	// Step 2: The subject creates the presentation and signs it.
-	presentation, err := subject.CreateAndSignPresentation(
+	presentation, err := subject.SignPresentation(
 		credentials,
 		nonce,
 	)

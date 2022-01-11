@@ -27,7 +27,7 @@ func (s Subject) GetID() []byte {
 	return []byte(s.keys.PublicKey)
 }
 
-func (s Subject) CreateAndSignPresentation(credentials Credential, nonce []byte) (
+func (s Subject) SignPresentation(credentials Credential, nonce []byte) (
 	Presentation, error) {
 
 	presentation := Presentation{PresentationToSign: PresentationToSign{
