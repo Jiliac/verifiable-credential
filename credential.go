@@ -21,7 +21,7 @@ type CredentialSubject struct {
 
 type CredentialToSign struct {
 	Context           []string          `json:"context"`
-	TypeOfCredential  []string          `json:"typeOfCredential"`
+	TypeOfCredential  []string          `json:"type"`
 	Issuer            Issuer            `json:"issuer"`
 	IssuanceDate      time.Time         `json:"issuanceDate"`
 	CredentialSubject CredentialSubject `json:"credentialSubject"`
@@ -37,7 +37,7 @@ func (c Claim) GetType() []string {
 	return []string{"GraduationCredential"}
 }
 
-func (c Credential) Export() (str []byte, err error) {
-	str, err = export(c.CredentialToSign)
-	return str, err
+func (c Credential) Export() (buf []byte, err error) {
+	buf, err = export(c.CredentialToSign)
+	return buf, err
 }

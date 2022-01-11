@@ -42,7 +42,10 @@ func (i Issuer) SignCredential(claim Claim, subjectID []byte) (Credential, error
 	}}
 
 	docToSign, err := creds.Export()
-	creds.Proof = SignProof(i.keys, docToSign)
+	if err != nil {
+		return creds, err
+	}
 
+	creds.Proof = SignProof(i.keys, docToSign)
 	return creds, err
 }

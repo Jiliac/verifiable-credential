@@ -5,12 +5,14 @@ import (
 	"crypto/ed25519"
 	"encoding/json"
 	"time"
+
+	"fmt"
 )
 
 const ed25519Type = "Ed25519Signature2018"
 
 type Proof struct {
-	TypeOfProof string            `json:"typeOfProof"`
+	TypeOfProof string            `json:"type"`
 	Created     time.Time         `json:"created"`
 	Creator     ed25519.PublicKey `json:"creator"`
 	Signature   []byte            `json:"signature"`
@@ -31,6 +33,7 @@ func SignProof(keys KeyPair, docToSign []byte) Proof {
 func export(i interface{}) ([]byte, error) {
 	var buf bytes.Buffer
 	e := json.NewEncoder(&buf)
-	err := e.Encode(buf)
+	err := e.Encode(i)
+	fmt.Println(string(buf.Bytes())) // To Remove
 	return buf.Bytes(), err
 }

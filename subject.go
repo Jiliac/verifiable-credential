@@ -26,3 +26,21 @@ func CreateSubject() (Subject, error) {
 func (s Subject) GetID() []byte {
 	return []byte(s.keys.PublicKey)
 }
+
+func (s Subject) CreateAndSignPresentation(credentials Credential) (
+	Presentation, error) {
+
+	presentation := Presentation{PresentationToSign: PresentationToSign{
+		Context:            vcContext,
+		TypeOfPresentation: []string{presType},
+		Credential:         credentials,
+	}}
+
+	docToSign, err := presentation.Export()
+	if err != nil {
+		return presentation, err
+	}
+
+	presentation.Proof = SignProof(s.keys, docToSign)
+	return presentation, err
+}
