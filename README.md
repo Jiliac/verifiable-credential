@@ -26,7 +26,10 @@ There are three roles involve with any type of credential:
 - The **Subject**: The credential is about them. They receive it, hold it and share it with the Verifiers.
 - The **Verifier**: Receive and verify the proofs from Subjects.
 
-![The Three Roles concerning Credentials](./img/three_roles.png)
+<p align="center" >
+  <img alt="The Three Roles concerning Credentials"
+    src="./img/three_roles.png" width="600px" />
+</p>
 
 Now let’s take a close (technical 🤓) look at each of the role.
 
@@ -44,7 +47,10 @@ Let’s say the issuer is my university. I just graduated and I get issued a deg
 
 The above is the *claim* of the credential.
 
-![The Three Parts of a Verifiable Credential](./img/credential_parts.png)
+<p align="center" >
+  <img alt="The Three Parts of a Verifiable Credential"
+    src="./img/credential_parts.png" width="300px" />
+</p>
 
 Our next goal is to get the issuer to *sign* this claim. This signature will be the proof.
 
@@ -152,7 +158,10 @@ Note: If you look at the full code in the repo, you’ll see that in the excerpt
 
 ## Part II: The Presentation (by the Subject)
 
-![The Three Roles concerning Credentials](./img/three_roles.png)
+<p align="center" >
+  <img alt="The Three Roles concerning Credentials"
+    src="./img/three_roles.png" width="600px" />
+</p>
 
 Now that our subject has its degree, he can present it to an employer.
 
