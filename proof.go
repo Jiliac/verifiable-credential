@@ -5,8 +5,6 @@ import (
 	"crypto/ed25519"
 	"encoding/json"
 	"time"
-
-	"fmt"
 )
 
 const ed25519Type = "Ed25519Signature2018"
@@ -34,6 +32,5 @@ func export(i interface{}) ([]byte, error) {
 	var buf bytes.Buffer
 	e := json.NewEncoder(&buf)
 	err := e.Encode(i)
-	fmt.Println(string(buf.Bytes())) // To Remove
 	return buf.Bytes(), err
 }

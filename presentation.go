@@ -8,6 +8,7 @@ type PresentationToSign struct {
 	Context            []string   `json:"context"`
 	TypeOfPresentation []string   `json:"type"`
 	Credential         Credential `json:"credential"`
+	Nonce              []byte     `json:"nonce"`
 }
 
 type Presentation struct {

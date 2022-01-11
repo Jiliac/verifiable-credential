@@ -62,13 +62,31 @@ func part2(issuer Issuer, subject Subject) (Credential, error) {
 }
 
 func part3(subject Subject, verifier Verifier, credentials Credential) {
-	// @TODO: Get Nonce from Verifier
-	presentation, err := subject.CreateAndSignPresentation(credentials)
+	// Step 1: The verifier creates a challenge/nonce to be included in the
+	// presentation which will be signed bby the subject.
+	nonce, err := verifier.MakeNonce()
+	if err != nil {
+		panic(err)
+	}
+
+	// Step 2: The subject creates the presentation and signs it.
+	presentation, err := subject.CreateAndSignPresentation(
+		credentials,
+		nonce,
+	)
 	if err != nil {
 		panic(err)
 	}
 
 	nicePrint(presentation, "Presentation")
+
+	// Step 3: The verifier checks that the signature of the presentation is
+	// correct.
+	err = verifier.VerifiesPresentation(presentation)
+	if err != nil {
+		panic(fmt.Errorf("Verificiation failed: %w", err))
+	}
+	fmt.Println("\n!!! Verification succeeded !!!")
 }
 
 func nicePrint(i interface{}, name string) {

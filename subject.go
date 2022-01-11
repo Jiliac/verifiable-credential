@@ -27,13 +27,14 @@ func (s Subject) GetID() []byte {
 	return []byte(s.keys.PublicKey)
 }
 
-func (s Subject) CreateAndSignPresentation(credentials Credential) (
+func (s Subject) CreateAndSignPresentation(credentials Credential, nonce []byte) (
 	Presentation, error) {
 
 	presentation := Presentation{PresentationToSign: PresentationToSign{
 		Context:            vcContext,
 		TypeOfPresentation: []string{presType},
 		Credential:         credentials,
+		Nonce:              nonce,
 	}}
 
 	docToSign, err := presentation.Export()
