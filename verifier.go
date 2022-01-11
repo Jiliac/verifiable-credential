@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto/ed25519"
 	"fmt"
 	"math/rand"
@@ -23,7 +24,28 @@ func (v Verifier) MakeNonce() (nonce []byte, err error) {
 }
 
 func (v Verifier) VerifiesPresentation(presentation Presentation) (err error) {
-	// A - Checks the presentation
+	// A - Checks the Presentation is signed by the Subject of the credential
+	credential := presentation.Credential
+	credentialSubjectID := credential.CredentialSubject.ID
+	presentationProver := presentation.Proof.Creator
+	if bytes.Compare(credentialSubjectID, presentationProver) != 0 {
+		return fmt.Errorf("Presentation prover is not the credential subject.")
+	}
+
+	// B - Checks the credential
+	signedCred, err := credential.Export()
+	if err != nil {
+		return fmt.Errorf(
+			"Couldn't export credential to verify signature: %w", err,
+		)
+	}
+
+	okCred := verifiesSignature(credential.Proof, signedCred)
+	if !okCred {
+		return fmt.Errorf("Invalid credential signature.")
+	}
+
+	// C - Checks the presentation
 	signedPres, err := presentation.Export()
 	if err != nil {
 		return fmt.Errorf(
@@ -34,20 +56,6 @@ func (v Verifier) VerifiesPresentation(presentation Presentation) (err error) {
 	okPres := verifiesSignature(presentation.Proof, signedPres)
 	if !okPres {
 		return fmt.Errorf("Invalid presentation signature.")
-	}
-
-	// B - Checks the credential
-	signedCred, err := presentation.Credential.Export()
-	if err != nil {
-		return fmt.Errorf(
-			"Couldn't export credential to verify signature: %w", err,
-		)
-	}
-
-	credentialProof := presentation.Credential.Proof
-	okCred := verifiesSignature(credentialProof, signedCred)
-	if !okCred {
-		return fmt.Errorf("Invalid credential signature.")
 	}
 
 	return err
