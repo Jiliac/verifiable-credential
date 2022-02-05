@@ -152,9 +152,11 @@ In this example, I’ve chosen to put the public keys directly in the VC. The `p
 
 In a real application, they would be a [Decentralized Identifier](https://en.wikipedia.org/wiki/Decentralized_identifier) (DID) which would point to the keys.
 
-`@TODO: why?`
+- A DID can resolve to multiple public keys
+- A DID enable the rotatation of these keys
+- A DID can resolve to service endpoints
 
-Note: If you look at the full code in the repo, you’ll see that in the excerpt above I cheated twice 😛. I hope you’ll forgive these simplifications.
+Note: If you look at [the full code in the repo](https://github.com/Jiliac/verifiable-credential), you’ll see that in the excerpt above I cheated twice 😛. I hope you’ll forgive these simplifications.
 
 ## Part II: The Presentation (by the Subject)
 
